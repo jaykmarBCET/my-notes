@@ -25,7 +25,7 @@ export default function MultiLangEditor({ code, setCode }: { code: string; setCo
       <h2 className="text-lg font-bold mb-2">Multi-Language Code Editor</h2>
 
       <select
-        className="p-2 mb-3 border rounded"
+        className="p-2 mb-3 border text-black rounded"
         value={language}
         onChange={(e) => setLanguage(e.target.value)}
       >
