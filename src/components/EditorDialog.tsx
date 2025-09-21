@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
+import type {LanguageSupport} from "@codemirror/language"
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
@@ -12,7 +13,7 @@ export default function MultiLangEditor({ code, setCode }: { code: string; setCo
 
   const [language, setLanguage] = useState("javascript");
 
-  const languageExtensions: Record<string,any> = {
+  const languageExtensions: Record<string,LanguageSupport> = {
     javascript: javascript(),
     python: python(),
     cpp: cpp(),

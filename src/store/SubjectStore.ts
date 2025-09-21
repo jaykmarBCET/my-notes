@@ -1,12 +1,14 @@
 import { InstanceAxios } from '../api/InstanceAxios';
 import { create } from 'zustand';
+import { subjectStoreInfo } from '@/types/types';
+import { AxiosError } from 'axios';
 
-const useSubjectStore = create((set) => ({
-    subject: null,
-    content: null,
+const useSubjectStore = create<subjectStoreInfo>((set) => ({
+    subject: [],
+    content: [],
     isLoading: false,
 
-    setLoading: (value) => set({ isLoading: value }),
+    setLoading: (value:boolean) => set({ isLoading: value }),
 
     createSubject: async (data) => {
         set({ isLoading: true });
@@ -21,7 +23,8 @@ const useSubjectStore = create((set) => ({
             set((state) => ({
                 subject: [...(state.subject || []), response.data],
             }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Create Subject Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -32,7 +35,7 @@ const useSubjectStore = create((set) => ({
     updateSubject: async (data) => {
         set({ isLoading: true });
         try {
-            const { id, name } = data;
+            const { id, name } = data as {id:string;name:string};
             const response = await InstanceAxios.put('/api/subject', { name }, { params: { id } });
             if (response.data.message) return;
             set((state) => ({
@@ -40,7 +43,8 @@ const useSubjectStore = create((set) => ({
                     item._id === id ? response.data : item
                 ),
             }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Update Subject Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -53,7 +57,8 @@ const useSubjectStore = create((set) => ({
             const response = await InstanceAxios.get('/api/subject');
             if (response.data.message) return;
             set({ subject: response.data });
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Get Subject Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -69,7 +74,8 @@ const useSubjectStore = create((set) => ({
             set((state) => ({
                 subject: (state.subject || []).filter((item) => item._id !== data.id),
             }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Delete Subject Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -82,7 +88,8 @@ const useSubjectStore = create((set) => ({
             const response = await InstanceAxios.post("/api/content", data);
             if (response.data.message) return;
             set((state) => ({ content: [...(state.content || []), response.data] }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Create Content Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -99,7 +106,8 @@ const useSubjectStore = create((set) => ({
                     item._id === data.id ? response.data : item
                 ),
             }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Update Content Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -112,7 +120,8 @@ const useSubjectStore = create((set) => ({
             const response = await InstanceAxios.get('/api/content', { params: { id: data.id } });
             if (response.data.message) return;
             set({ content: response.data });
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Get Content Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });
@@ -127,7 +136,8 @@ const useSubjectStore = create((set) => ({
             set((state) => ({
                 content: (state.content || []).filter((item) => item._id !== data.id),
             }));
-        } catch (error) {
+        } catch (e) {
+            const error = e as AxiosError<{message:string}>
             console.error("Delete Content Error:", error?.response?.data?.message || error.message);
         } finally {
             set({ isLoading: false });

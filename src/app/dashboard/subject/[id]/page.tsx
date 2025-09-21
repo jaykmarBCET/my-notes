@@ -8,17 +8,10 @@ import rehypeHighlight from 'rehype-highlight';
 import "highlight.js/styles/github.css";
 import EditContent from '@/components/EditContent';
 import AddContent from '@/components/AddContent';
-import { SubjectInfo } from '../../page';
+import { SubjectInfo,ContentInfo } from '@/types/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-interface ContentInfo {
-    title: string;
-    _id: string;
-    subjectId: string;
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
+
 
 function Page() {
     const params = useSearchParams()

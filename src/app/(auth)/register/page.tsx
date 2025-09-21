@@ -2,7 +2,7 @@
 
 import { useAuthStore } from '@/store/AuthStore'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {PropagateLoader} from 'react-spinners'
 
 export default function RegisterPage() {
@@ -12,9 +12,9 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
-        const name = formData.get("name")
-        const email = formData.get("email")
-        const password = formData.get("password")
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
         if (!name || !email || !password) { 
             return;
@@ -22,13 +22,17 @@ export default function RegisterPage() {
         await register({ name, email, password })
     }
 
+    const handelCurrent = useCallback(async()=>{
+            if (user) {
+                router.push("/");
+            } else {
+                await current();
+            }
+        },[user,router,current])
+
     useEffect(() => {
-        if (user) {
-            router.push("/login")
-        } else {
-            current()
-        }
-    }, [user])
+        handelCurrent()
+    }, [handelCurrent])
 
     return (
         <div className='w-screen h-screen bg-[#111827] flex flex-col justify-center items-center px-4 sm:px-6'>

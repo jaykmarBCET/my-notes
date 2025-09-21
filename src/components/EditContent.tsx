@@ -6,15 +6,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import "highlight.js/styles/github.css";
 import { useSubjectStore } from '@/store/SubjectStore';
-
-export interface ContentInfo {
-    title: string;
-    _id: string;
-    subjectId: string;
-    content: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { ContentInfo } from '@/types/types';
 
 function EditContent({
     item,

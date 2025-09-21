@@ -1,7 +1,7 @@
 'use client'
 import { useAuthStore } from '@/store/AuthStore';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {PropagateLoader} from 'react-spinners'
 
 export default function LoginPage() {
@@ -11,8 +11,8 @@ export default function LoginPage() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const email = formData.get("email");
-        const password = formData.get("password");
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
         if (!email || !password) {
             return;
@@ -20,13 +20,17 @@ export default function LoginPage() {
         await login({ email, password });
     };
 
-    useEffect(() => {
+    const handelCurrent = useCallback(async()=>{
         if (user) {
             router.push("/");
         } else {
-            current();
+            await current();
         }
-    }, [user]);
+    },[user,router,current])
+
+    useEffect(() => {
+        handelCurrent()
+    }, [handelCurrent]);
 
     return (
         <div className="w-screen h-screen bg-[#111827] flex flex-col justify-center items-center px-4">
@@ -64,7 +68,7 @@ export default function LoginPage() {
                     className="text-gray-400 mt-4 text-center cursor-pointer hover:text-blue-400 transition" 
                     onClick={() => router.push('/register')}
                 >
-                    Don't have an account? <span className="underline">Register</span>
+                    Don&apos;t have an account? <span className="underline">Register</span>
                 </p>
             </div>
         </div>

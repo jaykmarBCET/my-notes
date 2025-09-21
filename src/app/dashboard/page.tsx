@@ -6,14 +6,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BounceLoader } from 'react-spinners';
 import { useRouter } from 'next/navigation';
+import {SubjectInfo} from "@/types/types"
 
-export interface SubjectInfo {
-    userId: string,
-    _id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
 function Dashboard() {
     const { user } = useAuthStore();
     const { subject, getSubject, createSubject, isLoading, deleteSubject } = useSubjectStore();
@@ -30,7 +24,7 @@ function Dashboard() {
         if(!user){
             router.replace("/login")
         }
-    },[])
+    },[router,user])
     useEffect(() => {
         getSubject();
     }, [getSubject]);
@@ -74,7 +68,7 @@ function Dashboard() {
                                     Update
                                 </button>
                                 <button
-                                    onClick={() => deleteSubject({ id: item._id })}
+                                    onClick={() => deleteSubject({ id: item._id! })}
                                     className="text-white hover:bg-red-600 bg-gray-700  text-sm px-4 py-1 rounded-2xl"
                                     disabled={isLoading}
                                 >

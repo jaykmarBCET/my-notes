@@ -11,7 +11,7 @@ export default function SideBar() {
     console.log(user)
     useEffect(() => {
         current()
-    }, [])
+    }, [current])
     return (
         <div className="relative z-50">
             {/* Toggle Button */}

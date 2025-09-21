@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/store/AuthStore'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 
 function Home() {
@@ -16,7 +16,7 @@ function Home() {
     if(user){
       router.replace("/dashboard")
     }
-  },[])
+  },[router,current,user])
   
   return (
     <div className='flex flex-col items-center justify-center w-screen min-h-screen bg-gray-900 text-white p-4'>
@@ -25,7 +25,7 @@ function Home() {
           Welcome to <span className='text-yellow-400'>Make Notes</span>
         </h1>
         <p className='text-sm md:text-base text-gray-400 font-light'>
-          Your personal space for capturing ideas, thoughts, and to-do's.
+          Your personal space for capturing ideas, thoughts, and to-do&apos;s.
         </p>
       </div>
 
