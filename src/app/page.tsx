@@ -2,21 +2,24 @@
 import { useAuthStore } from '@/store/AuthStore'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 
 function Home() {
 
   const {user,current} = useAuthStore()
   const router = useRouter()
-  
-  useEffect(()=>{
-    current()
 
+  const handelCurrent = useCallback(async()=>{
+    current()
     if(user){
       router.replace("/dashboard")
     }
-  },[router,current,user])
+  },[])
+  
+  useEffect(()=>{
+    handelCurrent()
+  },[handelCurrent])
   
   return (
     <div className='flex flex-col items-center justify-center w-screen min-h-screen bg-gray-900 text-white p-4'>

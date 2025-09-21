@@ -26,7 +26,7 @@ export default function LoginPage() {
         } else {
             await current();
         }
-    },[user,router,current])
+    },[])
 
     useEffect(() => {
         handelCurrent()

@@ -28,7 +28,7 @@ export default function RegisterPage() {
             } else {
                 await current();
             }
-        },[user,router,current])
+        },[])
 
     useEffect(() => {
         handelCurrent()
