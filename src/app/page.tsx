@@ -15,7 +15,7 @@ function Home() {
     if(user){
       router.replace("/dashboard")
     }
-  },[])
+  },[user])
   
   useEffect(()=>{
     handelCurrent()

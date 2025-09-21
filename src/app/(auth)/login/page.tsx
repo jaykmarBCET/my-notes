@@ -22,11 +22,11 @@ export default function LoginPage() {
 
     const handelCurrent = useCallback(async()=>{
         if (user) {
-            router.push("/");
+            router.replace("/dashboard");
         } else {
             await current();
         }
-    },[])
+    },[user])
 
     useEffect(() => {
         handelCurrent()
